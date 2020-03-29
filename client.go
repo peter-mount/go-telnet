@@ -64,7 +64,7 @@ func (client *Client) Call(conn *Conn) error {
     caller = StandardCaller
   }
 
-  var ctx Context = NewContext().InjectLogger(logger, conn)
+  var ctx Context = NewContext().InjectLogger(logger, nil)
 
   var w Writer = conn
   var r Reader = conn
