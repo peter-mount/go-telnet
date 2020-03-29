@@ -3,10 +3,10 @@ package telnet
 import "net"
 
 type Context interface {
-  Logger() Logger              // Logger
-  InjectLogger(Logger) Context // Inject logger
-  LocalAddr() net.Addr         // Local address
-  RemoteAddr() net.Addr        // Remote address
+  Logger() Logger                            // Logger
+  InjectLogger(Logger, net.Conn) Context // Inject logger
+  LocalAddr() net.Addr                       // Local address
+  RemoteAddr() net.Addr                      // Remote address
 }
 
 type internalContext struct {
@@ -24,9 +24,9 @@ func (ctx *internalContext) Logger() Logger {
   return ctx.logger
 }
 
-func (ctx *internalContext) InjectLogger(logger Logger) Context {
+func (ctx *internalContext) InjectLogger(logger Logger, con net.Conn) Context {
   ctx.logger = logger
-
+  ctx.con = con
   return ctx
 }
 
